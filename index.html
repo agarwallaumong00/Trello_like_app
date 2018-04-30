@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>No Broker</title>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="app.css" />
+    </head>
+    <body ng-app="noBroker">
+        <div ng-controller="noBrokerController">
+           <div class="main-div">
+               <h2>Trello - No Broker</h2>
+               <div layout="row" layout-align="space-around">
+                    <div class="card-column" ng-repeat="card in cardArr track by $index">
+                        <h3>{{card.title}}</h3>
+                        <div class="content-div" id="{{$index}}" ondrop="drop(event)" ondragover="dragOver(event)">
+                            <div id="{{getId($parent.$index, $index)}}" layout="row" layout-align="space-between" draggable="true" ondragstart="dragStarted(event)" 
+                            ondrop="drop(event)" ondragover="dragOver(event)" class="editable-div" ng-repeat="content in card.content track by $index">
+                                <div class="content-span"><span>{{content}}</span></div>
+                                <div class="remove-btn"><span ng-click="removeCard($parent.$index, $index)">
+                                        <i class="material-icons remove">close</i>
+                                </span></div>
+                            </div>
+                        </div>
+                        <md-button ng-if="!showAddBox[$index]" class="new-card-btn" ng-click="addCard($index)">Add new card</md-button>
+                        <div ng-if="showAddBox[$index]">
+                            <textarea ng-model="contentText[$index]"></textarea>
+                            <div>
+                                <md-button ng-disabled="!contentText[$index]" ng-click="addNewCard($index, contentText[$index])">Add</md-button>
+                                <md-button ng-click="cancel($index)">Cancel</md-button>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+           </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+        <script src="app.js"></script>
+        
+    </body>
+</html>
